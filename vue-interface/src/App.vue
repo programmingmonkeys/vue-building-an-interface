@@ -6,6 +6,8 @@
         @searchRecords="SearchAppointments"
         :myKey="filterKey"
         :myDir="filterDir"
+        @request-key="changeKey"
+        @request-dir="changeDir"
       />
       <appointment-list
         :appointments="filterdApts"
@@ -71,6 +73,12 @@ export default {
     },
   },
   methods: {
+    changeKey: function(value) {
+      this.filterKey = value;
+    },
+    changeDir: function(value) {
+      this.filterDir = value;
+    },
     SearchAppointments: function(terms) {
       this.searchTerms = terms;
     },
