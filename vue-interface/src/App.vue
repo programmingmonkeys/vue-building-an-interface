@@ -4,7 +4,7 @@
       <add-appointment @add="addItem" />
       <search-appointments @searchRecords="SearchAppointments" />
       <appointment-list
-        :appointments="searchedApt"
+        :appointments="filterdApts"
         @remove="removeItem"
         @edit="editItem"
       />
@@ -25,6 +25,8 @@ export default {
   data: function() {
     return {
       appointments: [],
+      filterKey: "petName",
+      filterDir: "asc",
       searchTerms: "",
       aptIndex: 0,
     };
@@ -53,6 +55,15 @@ export default {
           item.aptNotes.toLowerCase().match(this.searchTerms.toLowerCase())
         );
       });
+    },
+    filterdApts: function() {
+      return _.orderBy(
+        this.searchedApt,
+        (item) => {
+          return item[this.filterKey].toLowerCase();
+        },
+        this.filterDir
+      );
     },
   },
   methods: {
