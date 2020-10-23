@@ -20,13 +20,19 @@ export default {
     return {
       title: "Appointment List",
       appointments: [],
+      aptIndex: 0,
     };
   },
 
   mounted() {
-    axios
-      .get("./data/appointments.json")
-      .then((res) => (this.appointments = res.data));
+    axios.get("./data/appointments.json").then(
+      (res) =>
+        (this.appointments = res.data.map((item) => {
+          item.aptId = this.aptIndex;
+          this.aptIndex++;
+          return item;
+        }))
+    );
   },
 
   methods: {
