@@ -2,9 +2,9 @@
   <div id="main-app" class="container">
     <div class="row justify-content-center">
       <add-appointment @add="addItem" />
-      <search-appointments />
+      <search-appointments @searchRecords="SearchAppointments" />
       <appointment-list
-        :appointments="appointments"
+        :appointments="searchedApt"
         @remove="removeItem"
         @edit="editItem"
       />
@@ -25,6 +25,7 @@ export default {
   data: function() {
     return {
       appointments: [],
+      searchTerms: "",
       aptIndex: 0,
     };
   },
@@ -43,7 +44,21 @@ export default {
         }))
     );
   },
+  computed: {
+    searchedApt: function() {
+      return this.appointments.filter((item) => {
+        return (
+          item.petName.toLowerCase().match(this.searchTerms.toLowerCase()) ||
+          item.petOwner.toLowerCase().match(this.searchTerms.toLowerCase()) ||
+          item.aptNotes.toLowerCase().match(this.searchTerms.toLowerCase())
+        );
+      });
+    },
+  },
   methods: {
+    SearchAppointments: function(terms) {
+      this.searchTerms = terms;
+    },
     addItem: function(apt) {
       apt.aptId = this.aptIndex;
       this.aptIndex++;
