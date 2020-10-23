@@ -2,7 +2,11 @@
   <div id="main-app" class="container">
     <div class="row justify-content-center">
       <add-appointment @add="addItem" />
-      <search-appointments @searchRecords="SearchAppointments" />
+      <search-appointments
+        @searchRecords="SearchAppointments"
+        :myKey="filterKey"
+        :myDir="filterDir"
+      />
       <appointment-list
         :appointments="filterdApts"
         @remove="removeItem"
