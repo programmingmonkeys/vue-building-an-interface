@@ -116,9 +116,12 @@ export default {
       this.formData = {
         petName: this.formData.petName,
         petOwner: this.formData.ownerName,
-        aptDate: this.formData.aptDate + " " + this.formData.aptTime,
+        aptDate: `${this.formData.aptDate}  ${this.formData.aptTime}`,
         aptNotes: this.formData.aptNotes,
       };
+      this.$emit("add", this.formData);
+      this.formData = [];
+      this.hidepanel = true;
     },
   },
 };
